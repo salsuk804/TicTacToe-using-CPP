@@ -1,0 +1,183 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << "------------------------------------------------------" << endl;
+    cout << "                 Tic Tac Toe                            " << endl;
+    cout << "------------------------------------------------------" << endl;
+
+    cout << endl;
+    cout << endl;
+
+    cout << "*******************************************************" << endl;
+    cout << "  IF THERE'S A DRAW, ONLY ONE RANDOM PLAYER WILL WIN " << endl;
+    cout << "*******************************************************" << endl;
+    cout << endl;
+    cout << endl;
+
+    int arr[9] = { 2,3,4,5,6,7,8,9,10 };
+    int temp[9] = { -1,-1,-1,-1,-1,-1,-1,-1,-1 };
+   
+    int box = 0;
+    int i = 0;
+
+    while (i < 9) {
+        bool NotDuplicate = false;
+        bool outOfrange = false;
+        if (i % 2 == 0) {
+            cout << "Player 1 Enter box number: ";
+            cin >> box;
+            if (box >= 0 && box <= 8) {
+                outOfrange = false;
+            }
+            else {
+                outOfrange = true;
+            }
+
+            for (int j = 0; j < 9; j++) {
+                if (temp[j] == box) {
+                    NotDuplicate = false;
+                    break;
+                }
+                else {
+                    NotDuplicate = true;
+                }
+            }
+            if (NotDuplicate == false) {
+                cout << "Duplicate number, try again" << endl;
+            }
+            else {
+                if (outOfrange == true) {
+                    cout << "Number out of range. Enter number must be between 0 and 8" << endl;
+                }
+                else {
+                    temp[i] = box;
+                    i++;
+                }
+            }
+        }
+        else {
+            cout << "Player 2 Enter box number: ";
+            cin >> box;
+            if (box >= 0 && box <= 8) {
+                outOfrange = false;
+            }
+            else {
+                outOfrange = true;
+            }
+
+            for (int j = 0; j < 9; j++) {
+                if (temp[j] == box) {
+                    NotDuplicate = false;
+                    break;
+                }
+                else {
+                    NotDuplicate = true;
+                }
+            }
+            if (NotDuplicate == false) {
+                cout << "Duplicate number. Try again" << endl;
+            }
+            else {
+                if (outOfrange == true) {
+                    cout << "Number out of range. Number must be between 0 and 8" << endl;
+                }
+                else {
+                    temp[i] = box;
+                    i++;
+                }
+            }
+        }
+    }
+
+    for (int a = 0; a < 9; a++) {
+        int index = 0;
+
+        if (a % 2 == 0) {
+            index = temp[a];
+            arr[index] = 0;
+        }
+        else {
+            index = temp[a];
+            arr[index] = 1;
+        }
+    }
+
+    // Row check
+    bool row = true;
+    for (int a = 0; a < 3; a++) {
+        int Player1Count = 0;
+        int Player2Count = 0;
+        for (int b = 0; b < 3; b++) {
+            if (arr[a * 3 + b] == 0) {
+                Player1Count++;
+            }
+            else {
+                Player2Count++;
+            }
+        }
+        if (Player1Count == 3) {
+            cout << "Player 1 won" << endl;
+            break;
+        }
+        else if (Player2Count == 3) {
+            cout << "Player 2 won" << endl;
+            break;
+        }
+        else {
+            row = false;
+        }
+    }
+
+    // Column check
+    bool col = true;
+    if (row == false) {
+        for (int a = 0; a < 3; a++) {
+            int Player1Count = 0;
+            int Player2Count = 0;
+            for (int b = 0; b < 3; b++) {
+                if (arr[a + 3 * b] == 0) {
+                    Player1Count++;
+                }
+                else {
+                    Player2Count++;
+                }
+            }
+
+            if (Player1Count == 3) {
+                cout << "Player 1 won" << endl;
+                break;
+            }
+            else if (Player2Count == 3) {
+                cout << "Player 2 won" << endl;
+                break;
+            }
+            else {
+                col = false;
+            }
+        }
+    }
+
+    // Diagonal check
+    bool diagonal = true;
+    if (col == false) {
+        if ((arr[0] == 0 && arr[4] == 0 && arr[8] == 0) || (arr[2] == 0 && arr[4] == 0 && arr[6] == 0)) {
+            cout << "Player 1 won" << endl;
+            diagonal = true;
+        }
+        else if ((arr[0] == 1 && arr[4] == 1 && arr[8] == 1) || (arr[2] == 1 && arr[4] == 1 && arr[6] == 1)) {
+            cout << "Player 2 won" << endl;
+            diagonal = true;
+        }
+        else {
+            diagonal = false;
+        }
+    }
+
+    if (diagonal == false) {
+        cout << "No one won. Very sad" << endl;
+    }
+
+    return 0;
+}
